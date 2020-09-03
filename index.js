@@ -50,7 +50,7 @@ let timeMillis = ""
                         // console.log(result)
                         //用户密码
                         //console.log("password:"+result[0].password)
-                        let userName = result[0].userName
+                        let userName = result[0].name
                         let password = result[0].password
                         //公钥分割
                         for (let i = 0; i < publicKey.length; i++) {
@@ -67,6 +67,7 @@ let timeMillis = ""
                         console.log(MathNum)
                         if (MathNum == true) {
                             let Key = userName + "$" + timeMillis + "$" + password
+                            console.log(Key)
                             let md5Key = crypto.createHash('md5').update(Key).digest("hex")
                             console.log(md5Key)
                             if (md5Key == md5SecretKey) {

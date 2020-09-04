@@ -63,7 +63,7 @@ let timeMillis = ""
                         console.log(md5SecretKey)
                         let SysTime = moment().startOf('day').valueOf()
                         console.log(SysTime)
-                        let MathNum = SysTime - timeMillis > 5 * 60
+                        let MathNum = SysTime - timeMillis < 5 * 60
                         console.log(MathNum)
                         if (MathNum == true) {
                             let Key = userName + "$" + timeMillis + "$" + password

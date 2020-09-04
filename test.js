@@ -1,7 +1,7 @@
 let moment = require('moment')
 let crypto = require('crypto')
 
-let publicKey = "1a91d8f54c49395275492e5700a947d1b9c97a17ff"
+let publicKey = "4a01bca53c3909a977212439701078607d271a771d"
 
 let userName = "zhongzai_juzai"
 let password = "nmN31lxi"
@@ -26,8 +26,8 @@ console.log(MathNum)
 
 let Key = userName + "$" + timeMillis + "$" + password
 let md5Key = crypto.createHash('md5').update(Key).digest("hex")
-console.log(md5Key)
-
+console.log("md5key:"+md5Key)
+console.log("md5SecretKey:" + md5SecretKey)
 if (md5Key == md5SecretKey) {
     console.log("验证通过")
 } else {

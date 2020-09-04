@@ -60,16 +60,17 @@ let timeMillis = ""
                                 md5SecretKey += publicKey.charAt(i)
                             }
                         }
-                        // console.log(md5SecretKey)
+                        console.log(md5SecretKey)
                         let SysTime = moment().startOf('day').valueOf()
                         console.log(SysTime)
-                        let MathNum = SysTime - timeMillis < 5 * 60
+                        let MathNum = SysTime - timeMillis > 5 * 60
                         console.log(MathNum)
                         if (MathNum == true) {
                             let Key = userName + "$" + timeMillis + "$" + password
                             console.log(Key)
                             let md5Key = crypto.createHash('md5').update(Key).digest("hex")
-                            console.log(md5Key)
+                            console.log("md5Key:" + md5Key)
+                            console.log("md5SecretKey:" + md5SecretKey)
                             if (md5Key == md5SecretKey) {
                                 console.log("验证通过")
                                 //确认参数，参数合法化确认

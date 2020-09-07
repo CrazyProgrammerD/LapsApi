@@ -1,0 +1,65 @@
+需要两参数（name，publicKey）
+
+例如 name=test&publicKey=1a91d8f54c49395275492e5700a947d1b9c97a17ff
+
+1.数据库中查询用户test是否存在(若有数据，则得到userName和password，用于后续验证)
+
+2.用户存在则进行公钥验证
+
+3.分割公钥字符串publicKey(1a91d8f54c49395275492e5700a947d1b9c97a17ff)得到1592979197和1a9d8f4c43957542e500a47db9c7a1ff
+
+其中1592979197是秒数，1a9d8f4c43957542e500a47db9c7a1ff是MD5私钥
+
+	//字符串分割算法
+	
+	// 时间戳(单位：秒)
+	StringBuffer timeMillis = new StringBuffer();
+	// MD5加密私钥
+	StringBuffer md5SecretKey = new StringBuffer();
+	for (int i = 0; i < md5PublicKey.length(); i++) {
+		if (i%4==3){
+			timeMillis.append(md5PublicKey.charAt(i));
+		} else {
+			md5SecretKey.append(md5PublicKey.charAt(i));
+		}
+	}
+	
+4.判断系统当前时间和timeMillis的差值是否小于5分钟（5 * 60）
+
+5.判断MD5加密私钥md5SecretKey是否和算出来的私钥一致
+
+	// 用这个字符串进行MD5加密
+	String key = userName + "$" + timeMillis + "$" + password;
+	String md5SecretKey1 = MD5Encryption(key);
+	if(md5SecretKey1 == md5SecretKey){
+		// 验证通过
+	} else {
+		// 验证不通过
+	}
+	
+	// MD5加密算法
+	public static String MD5Encryption(String plainText) {
+        byte[] secretBytes = null;
+        try {
+            secretBytes = MessageDigest.getInstance("md5").digest(plainText.getBytes());
+
+        } catch (NoSuchAlgorithmException e) {
+            throw new RuntimeException("没有md5这个算法！");
+        }
+        String md5code = new BigInteger(1, secretBytes).toString(16);// 16进制数字
+        // 如果生成数字未满32位，需要前面补0
+        for (int i = 0; i < 32 - md5code.length(); i++) {
+            md5code = "0" + md5code;
+        }
+        return md5code;
+    }
+
+    sql语句：SELECT * FROM User where name = #{name, jdbcType=VARCHAR} and is_active = 1 and expiration_time >= #{System.currentTimeMillis, jdbcType=VARCHAR}
+
+    System.currentTimeMillis //系统当前时间
+
+    //
+    接口参数
+    1.时间或时间段（精确到秒20200904000000）
+    2.经纬度
+    3.要素（有可能是多个）

@@ -15,7 +15,7 @@ let md5SecretKey = ""
 let timeMillis = ""
 
     function Check(req) {
-        if (req.url.indexOf('/LapsApi') === 0 && req.method === 'POST') {
+        if (req.url.indexOf('/ApiCheck') === 0 && req.method === 'POST') {
             var reqdata = ''
             req.on('data', function (chuck) {
                 reqdata += chuck
@@ -92,6 +92,21 @@ let timeMillis = ""
         }
     }
 
+  function LapsData(req){
+      if (req.url.indexOf('/LapsData') === 0 && req.method === 'POST') {
+          var reqStr = ''
+          req.on('data', function(data){
+              reqStr+=data
+              console.log(reqStr)
+          })
+          req.on('end', function () {
+              res.end(reqStr)
+          })
+      } else {
+
+      }
+  }  
+LapsData(req)
 Check(req)
 
 }).listen(9999,function(){

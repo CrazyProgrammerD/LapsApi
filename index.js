@@ -130,9 +130,8 @@ let timeMillis = ""
                     let duration = moment.duration(Enddiff.diff(Startdiff)).asHours()
                     for (let a = 0; a <= duration; a++) {
                         let DiffStr = moment(timeStart, "YYYYMMDDHHmm").add(a, 'hours').format("YYYYMMDDHHmm")
-                        let Diff_timefom = moment(DiffStr, "YYYY-MM-DD hh:mm").subtract(8, 'hour').format("YYYY-MM-DDTHH:mm:ssZ")
+                        let Diff_timefom = moment(DiffStr, "YYYY-MM-DD hh:mm").subtract(8, 'hour').format("YYYY-MM-DDHH:mm:ss")
                         let Diff_time = Diff_timefom.substring(0, time_startfom.length - 6)
-                        //TimeArr.push(DiffStr)
                        
                         let NCSSStr = "http://10.16.48.231:30002/thredds/ncss/data/231/Dzk/LAPS/demo/20200907/MSP3_PMSC_LAPS3KM_ME_L88_CHN_" + DiffStr + "_00000-00000.GR2?var=" + dic[reqStrobj.Element[0]] + "&latitude=" + reqStrobj.latitude + "&longitude=" + reqStrobj.longitude + "&time_start=" + Diff_time + "Z&time_end=" + Diff_time + "Z&vertCoord=&accept=xml"
                         console.log(NCSSStr)

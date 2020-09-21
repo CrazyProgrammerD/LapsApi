@@ -1,0 +1,57 @@
+一、数据库
+
+	IP：220.243.128.36
+	端口：8046
+	用户名：wis_bxz
+	密码：wis_bxz##20200628
+	数据库：baobian_product
+
+二、获取公钥接口
+
+	接口样例：
+	
+		http://datacenterapi.wis.com.cn:8056/getPublicKey?name=zhongzai_juzai&password=nmN31lxi
+		
+三、公钥验证接口（公司内部接口）
+
+	参数：
+	
+		name 必选项，用户名
+		
+		publicKey 必选项，公钥
+		
+	接口样例：
+	
+		http://datacenterapi.wis.com.cn:8056/authentication?name=zhongzai_juzai&publicKey=a36143950f595999fb5462469aa3f5b62f66eae54b
+		
+	返回值：
+	
+		成功：{"success":1,"message":"用户权限验证通过！","data":""}
+		
+		失败：{"success":0,"message":"公钥超时，请重新申请公钥！","data":""}
+		
+四、访问记录接口（公司内部接口）
+
+	参数：
+	
+		name 必选项，用户名
+		
+		dataType 必选项，数据类型，参考数据字典表，目前就两类数据（daily日值资料和hourly实况资料）
+		
+		url 必选项，数据访问的接口url（需要利用URLEncoder进行转码，java.net.URLEncoder.(url, "UTF-8")）
+		
+		result 必选项，接口访问结果（0：失败，1：成功）
+		
+		message 可选项，接口访问异常原因（需要利用URLEncoder进行转码，java.net.URLEncoder.(url, "UTF-8")）
+		
+		host 可选项，客户端ip
+		
+	接口样例：
+	
+		http://datacenterapi.wis.com.cn:8056/insertVisitRecord?name=zhongzai_juzai&dataType=daily&url=http%3A%2F%2F127.0.0.1%3A8080%2FgetDailyData%3Fname%3Dzhongzai_juzai%26publicKey%3D0d51ba152279d7f3fbb3d777b9e6d714b2e4bb371a%26pac%3D2327%26time%3D20200623000000%26type%3DTEM_Avg%2CTEM_Max%2CLat%2CLon&result=0&message=%E5%BC%82%E5%B8%B8%E4%BF%A1%E6%81%AF%EF%BC%81&host=10.14.84.79
+		
+	返回值：
+	
+		成功：{"success":1,"message":"插入访问数据成功！","data":""}
+		
+		失败：{"success":0,"message":"异常信息！","data":""}
